@@ -2,6 +2,7 @@
   "name": "intwieo-backend",
   "version": "1.0.0",
   "description": "Backend do app Intwieo com chat em tempo real",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
