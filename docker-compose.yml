@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: intwieo
+      POSTGRES_PASSWORD: intwieo
+      POSTGRES_DB: intwieo_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  backend:
+    build: ./backend
+    command: ["npm","run","start"]
+    environment:
+      - DATABASE_URL=postgresql://intwieo:intwieo@postgres:5432/intwieo_db
+      - JWT_SECRET=devsecret
+      - PORT=4000
+      - FRONTEND_URL=http://localhost:3000
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+  frontend:
+    build: ./frontend
+    command: ["npm","run","dev"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+volumes:
+  pgdata:
