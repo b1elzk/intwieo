@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>INTWIEO — Prototype</title>
+<style>
+  :root{
+    --bg: #ffffff;
+    --text:#222;
+    --muted:#6b7280;
+    --accent:#111827;
+    --card:#f8fafc;
+    --soft:#f3f4f6;
+    --glass: rgba(17,24,39,0.03);
+  }
+  *{box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+  body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+  .center{max-width:1100px;margin:30px auto;padding:24px;}
+  .splash{text-align:center;padding:48px 12px;}
+  h1{font-size:36px;margin:8px 0;}
+  p.lead{color:var(--muted);margin:6px 0 18px;}
+  .card{background:var(--card);border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,0.06);}
+  .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+  .col{flex:1}
+  .small{font-size:13px;color:var(--muted)}
+  input[type="text"], input[type="email"], input[type="password"], input[type="date"]{
+    width:100%;padding:12px;border-radius:12px;border:1px solid #e6e9ee;background:var(--bg);font-size:14px;
+  }
+  button{background:var(--accent);color:white;padding:10px 14px;border-radius:12px;border:0;font-weight:600;cursor:pointer;}
+  button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(0,0,0,0.06);}
+  .grid{display:grid;gap:12px}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  .profile-card{text-align:center;padding:18px;border-radius:14px;background:linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);}
+  .avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#edf2ff,#fff6f6);display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#374151;margin-bottom:10px;}
+  .muted{color:var(--muted)}
+  .map-placeholder{height:260px;border-radius:14px;background:linear-gradient(180deg,#f8fafc,#f1f5f9);display:flex;align-items:center;justify-content:center;color:var(--muted);font-style:italic}
+  .nav{display:flex;gap:10px;justify-content:center;margin-top:20px;}
+  .lang-toggle{position:fixed;right:18px;top:18px;background:var(--glass);padding:8px;border-radius:12px;font-size:13px;}
+  .steps{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+  .dot{width:10px;height:10px;border-radius:50%;background:#e6e9ee;display:inline-block;}
+  .dot.active{background:var(--accent);}
+  .chat{max-width:700px;margin:0 auto;}
+  .bubble{max-width:70%;padding:10px 12px;border-radius:12px;margin-bottom:8px;display:inline-block;}
+  .left{background:#f3f4f6;border-top-left-radius:6px;}
+  .right{background:#e6f0ff;margin-left:auto;border-top-right-radius:6px;text-align:right;}
+  .footer{margin:40px 0;text-align:center;color:var(--muted);font-size:13px}
+  .hidden{display:none}
+  .navbar{display:flex;gap:12px;align-items:center;justify-content:space-between}
+  .logo{font-weight:800;letter-spacing:0.6px}
+  .pill{padding:6px 10px;border-radius:999px;background:#f3f4f6;font-size:13px;color:var(--muted)}
+  /* responsive */
+  @media (max-width:720px){
+    .grid.cols-3{grid-template-columns:repeat(1,1fr)}
+    h1{font-size:28px}
+  }
+</style>
+</head>
+<body>
+  <div class="lang-toggle" id="langToggle">PT • EN</div>
+  <div class="center">
+    <div class="navbar">
+      <div class="logo">INTWIEO</div>
+      <div class="pill">Where Souls Match</div>
+    </div>
+
+    <!-- Splash -->
+    <section id="screen-splash" class="splash card">
+      <h1>INTWIEO</h1>
+      <p class="lead" id="splash-sub">Where Souls Match Beyond Borders</p>
+      <div class="steps" style="margin-top:12px">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div style="margin-top:18px">
+        <button onclick="go('screen-login')">Começar / Get started</button>
+      </div>
+    </section>
+
+    <!-- Login -->
+    <section id="screen-login" class="card hidden" style="margin-top:20px;padding:24px">
+      <h2 id="login-title">Entre ou Crie sua Conta / Sign in or Create account</h2>
+      <div class="row" style="margin-top:12px">
+        <div class="col">
+          <input placeholder="E-mail / Email" type="email" id="email">
+        </div>
+        <div class="col" style="max-width:180px">
+          <input placeholder="Senha / Password" type="password" id="password">
+        </div>
+      </div>
+      <div style="margin-top:12px" class="row">
+        <button onclick="go('screen-profile')">Entrar / Sign in</button>
+        <button class="ghost" onclick="go('screen-splash')">Voltar / Back</button>
+      </div>
+      <div style="margin-top:12px" class="small muted">ou continue com / or continue with</div>
+      <div style="margin-top:8px" class="row">
+        <button class="ghost" onclick="alert('OAuth flow placeholder')">Google</button>
+        <button class="ghost" onclick="alert('OAuth flow placeholder')">Apple</button>
+      </div>
+    </section>
+
+    <!-- Profile Creation -->
+    <section id="screen-profile" class="card hidden" style="margin-top:20px;padding:22px">
+      <h2 id="profile-title">Crie seu Perfil Vibracional / Create your Vibrational Profile</h2>
+      <p class="small muted" id="profile-sub">Compartilhe sua essência — valores, paixões e energia. / Share your essence — values, passions and energy.</p>
+      <div class="grid" style="margin-top:12px">
+        <input type="text" id="name" placeholder="Seu nome completo / Full name">
+        <div class="row">
+          <input type="text" id="country" placeholder="País / Country">
+          <input type="date" id="bday" placeholder="Data de nascimento / Birthdate">
+        </div>
+        <input type="text" id="inspire" placeholder="O que te inspira? / What inspires you?">
+        <div class="row">
+          <button onclick="saveProfile()">Salvar Perfil / Save profile</button>
+          <button class="ghost" onclick="go('screen-login')">Voltar / Back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Matches -->
+    <section id="screen-matches" class="card hidden" style="margin-top:20px;padding:22px">
+      <h2 id="matches-title">Conexões Recomendadas / Recommended Connections</h2>
+      <p class="small muted" id="matches-sub">Compatibilidade baseada em energia, valores e interesses. / Compatibility based on energy, values and interests.</p>
+      <div class="grid cols-3" style="margin-top:12px">
+        <div class="profile-card card">
+          <div class="avatar">AM</div>
+          <div class="muted">Amélia — Lisboa, PT</div>
+          <h3>Energia 92%</h3>
+          <div style="margin-top:8px"><button onclick="openChat('Amélia')">Conectar / Connect</button></div>
+        </div>
+        <div class="profile-card card">
+          <div class="avatar">ND</div>
+          <div class="muted">Ndunge — Windhoek, NA</div>
+          <h3>Energia 87%</h3>
+          <div style="margin-top:8px"><button onclick="openChat('Ndunge')">Conectar / Connect</button></div>
+        </div>
+        <div class="profile-card card">
+          <div class="avatar">JK</div>
+          <div class="muted">James — London, UK</div>
+          <h3>Energia 85%</h3>
+          <div style="margin-top:8px"><button onclick="openChat('James')">Conectar / Connect</button></div>
+        </div>
+      </div>
+      <div style="margin-top:14px" class="row">
+        <button onclick="go('screen-world')">Ver Intwieo World / See Intwieo World</button>
+        <button class="ghost" onclick="go('screen-profile')">Editar Perfil / Edit profile</button>
+      </div>
+    </section>
+
+    <!-- Chat -->
+    <section id="screen-chat" class="card hidden chat" style="margin-top:20px;padding:18px">
+      <div class="row" style="align-items:center;justify-content:space-between">
+        <div>
+          <div class="small muted" id="chat-meta">Conectado com <strong id="chat-with">Usuário</strong></div>
+          <h3 id="chat-title">Chat / Conversa</h3>
+        </div>
+        <div>
+          <button class="ghost" onclick="go('screen-matches')">Fechar / Close</button>
+        </div>
+      </div>
+      <div style="margin-top:12px" id="chat-window">
+        <div class="bubble left">Olá! Como você está hoje?</div>
+        <div class="bubble right">Hi! I'm great, and you? <div class="small muted" style="margin-top:6px">Traduzido automaticamente / Translated</div></div>
+      </div>
+      <div style="margin-top:12px" class="row">
+        <input type="text" id="chat-input" placeholder="Digite sua mensagem... / Type a message...">
+        <button onclick="sendMessage()">Enviar / Send</button>
+      </div>
+      <div style="margin-top:8px" class="small muted">Tradução automática ativa / Automatic translation is active</div>
+    </section>
+
+    <!-- World Map -->
+    <section id="screen-world" class="card hidden" style="margin-top:20px;padding:18px">
+      <h2 id="world-title">Intwieo World — Mapa de Conexões / Global Connections Map</h2>
+      <p class="small muted" id="world-sub">Explorar conexões enquanto viaja ou planeja uma jornada. / Explore connections while you travel or plan a journey.</p>
+      <div class="map-placeholder card" style="margin-top:12px">[Mapa Interativo — Visualização de conexões globais]</div>
+      <div style="margin-top:12px" class="row">
+        <button onclick="go('screen-matches')">Voltar / Back</button>
+        <button onclick="go('screen-premium')">Ver Premium / View Premium</button>
+      </div>
+    </section>
+
+    <!-- Premium -->
+    <section id="screen-premium" class="card hidden" style="margin-top:20px;padding:18px">
+      <h2 id="premium-title">Intwieo Premium</h2>
+      <p class="small muted" id="premium-sub">Traduções ilimitadas, filtros avançados e recursos de viagem. / Unlimited translations, advanced filters and travel features.</p>
+      <div style="margin-top:12px" class="grid">
+        <div class="card" style="padding:16px"><strong>Assinatura Mensal</strong><div class="small muted">R$19,99 / month (simulação)</div></div>
+        <div class="card" style="padding:16px"><strong>Créditos Intwieo</strong><div class="small muted">Enviar presentes, destacar mensagens</div></div>
+      </div>
+      <div style="margin-top:12px" class="row">
+        <button onclick="alert('Fluxo de pagamento placeholder')">Assinar Agora / Subscribe</button>
+        <button class="ghost" onclick="go('screen-world')">Voltar / Back</button>
+      </div>
+    </section>
+
+    <div class="footer">INTWIEO © 2025 — Conectando Almas, Unindo Mundos.</div>
+  </div>
+
+<script>
+  // Simple screen routing
+  function go(id){
+    document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+    const el = document.getElementById(id);
+    if(el) el.classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  // Save profile and proceed
+  function saveProfile(){
+    const name = document.getElementById('name').value || 'Você';
+    document.getElementById('splash-sub').textContent = 'Where Souls Match Beyond Borders';
+    document.getElementById('chat-with').textContent = name;
+    go('screen-matches');
+  }
+  // Chat interactions
+  function openChat(name){
+    document.getElementById('chat-with').textContent = name;
+    document.getElementById('chat-meta').innerHTML = 'Conectado com <strong>' + name + '</strong>';
+    go('screen-chat');
+  }
+  function sendMessage(){
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if(!text) return;
+    const div = document.createElement('div');
+    div.className = 'bubble right';
+    div.innerHTML = text + '<div class=\"small muted\" style=\"margin-top:6px\">(Traduzido automaticamente)</div>';
+    document.getElementById('chat-window').appendChild(div);
+    input.value='';
+    // simulate reply
+    setTimeout(()=>{
+      const r = document.createElement('div');
+      r.className='bubble left';
+      r.textContent = 'Resposta simulada — ótimo conversar assim!';
+      document.getElementById('chat-window').appendChild(r);
+      window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+    },800);
+  }
+
+  // Language toggle (simple)
+  const langToggle = document.getElementById('langToggle');
+  let en = false;
+  langToggle.onclick = ()=>{
+    en = !en;
+    applyLang();
+  }
+  function applyLang(){
+    if(en){
+      document.getElementById('splash-sub').textContent = 'Where Souls Match Beyond Borders';
+      document.getElementById('login-title').textContent = 'Sign in or Create account';
+      document.getElementById('profile-title').textContent = 'Create your Vibrational Profile';
+      document.getElementById('profile-sub').textContent = 'Share your essence — values, passions and energy.';
+      document.getElementById('matches-title').textContent = 'Recommended Connections';
+      document.getElementById('matches-sub').textContent = 'Compatibility based on energy, values and interests.';
+      document.getElementById('chat-title').textContent = 'Chat';
+      document.getElementById('world-title').textContent = 'Intwieo World — Global Connections Map';
+      document.getElementById('premium-title').textContent = 'Intwieo Premium';
+      langToggle.textContent = 'EN • PT';
+    } else {
+      document.getElementById('splash-sub').textContent = 'Where Souls Match Beyond Borders';
+      document.getElementById('login-title').textContent = 'Entre ou Crie sua Conta';
+      document.getElementById('profile-title').textContent = 'Crie seu Perfil Vibracional';
+      document.getElementById('profile-sub').textContent = 'Compartilhe sua essência — valores, paixões e energia.';
+      document.getElementById('matches-title').textContent = 'Conexões Recomendadas';
+      document.getElementById('matches-sub').textContent = 'Compatibilidade baseada em energia, valores e interesses.';
+      document.getElementById('chat-title').textContent = 'Chat / Conversa';
+      document.getElementById('world-title').textContent = 'Intwieo World — Mapa de Conexões';
+      document.getElementById('premium-title').textContent = 'Intwieo Premium';
+      langToggle.textContent = 'PT • EN';
+    }
+  }
+  applyLang();
+</script>
+</body>
+</html>
